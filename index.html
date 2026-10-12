@@ -1,18 +1,209 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill Splitter</title>
+    <title>BillSplit | Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="app">
 
-    <h1>Bill Splitter</h1>
-    <p>Split your bill easily with friends!</p>
+        <aside class="sidebar">
+            <h2 class="logo">Bill<span>Split.</span></h2>
 
-    <script src="script.js"></script>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active">▦ Dashboard</a>
+                <a href="#expense-form-panel" class="nav-link">＋ Add Expense</a>
+                <a href="#settlements-panel" class="nav-link">⇄ Settlements</a>
+                <a href="#expenses-panel" class="nav-link">◷ History</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p>Manage money.<br>Keep friendships.</p>
+                <span>BillSplit © 2026</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">YOUR FINANCES</p>
+                    <h1>Dashboard</h1>
+                    <p class="subtitle">
+                        Welcome back! Here's your expense overview.
+                    </p>
+                </div>
+                <button class="profile-button" type="button">My Profile</button>
+            </header>
+
+            <section class="summary-grid">
+                <article class="summary-card">
+                    <p>Total Group Expenses</p>
+                    <h2 id="total-expenses">₹ 0</h2>
+                    <span class="card-note">Across all expenses</span>
+                </article>
+
+                <article class="summary-card">
+                    <p>You Owe</p>
+                    <h2 class="amount-red" id="you-owe">₹ 0</h2>
+                    <span class="card-note">You need to pay</span>
+                </article>
+
+                <article class="summary-card">
+                    <p>You Are Owed</p>
+                    <h2 class="amount-green" id="you-are-owed">₹ 0</h2>
+                    <span class="card-note">Others need to pay you</span>
+                </article>
+            </section>
+
+            <section class="content-grid">
+
+                <article class="panel expenses-panel" id="expenses-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Recent Expenses</h2>
+                            <p>Your latest group spending</p>
+                        </div>
+                        <button class="text-button" id="view-all-button"
+                                type="button">View all</button>
+                    </div>
+
+                    <div id="expense-list">
+                        <p class="empty-state">
+                            No expenses added yet. Add your first group bill!
+                        </p>
+                    </div>
+                </article>
+
+                <article class="panel quick-panel">
+                    <h2>Quick Actions</h2>
+                    <p>Manage your shared expenses.</p>
+
+                    <button class="primary-button" id="add-expense-button"
+                            type="button">
+                        + Add New Expense
+                    </button>
+
+                    <button class="secondary-button" id="settle-button"
+                            type="button">
+                        ⇄ Settle Balances
+                    </button>
+
+                    <div class="tip-box">
+                        <span>💡</span>
+                        <div>
+                            <h3>Money tip</h3>
+                            <p>
+                                Keep expenses updated so everyone knows
+                                who owes whom.
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+
+            <section class="panel expense-form-panel"
+                     id="expense-form-panel" hidden>
+
+                <div class="panel-heading">
+                    <div>
+                        <h2>Add New Expense</h2>
+                        <p>Split a group bill fairly.</p>
+                    </div>
+                    <button class="text-button" id="cancel-expense-button"
+                            type="button">Cancel</button>
+                </div>
+
+                <form id="expense-form">
+
+                    <label for="expense-name">Expense name</label>
+                    <input id="expense-name" name="expenseName"
+                           type="text" placeholder="e.g. Dinner"
+                           maxlength="100" required>
+
+                    <label for="expense-amount">Total Bill (₹)</label>
+                    <input id="expense-amount" name="amount"
+                           type="number" min="0.01" step="0.01"
+                           placeholder="e.g. 900" required>
+
+                    <label for="paid-by">Who paid the bill?</label>
+                    <select id="paid-by" name="paidBy" required>
+                        <option value="Mayuri">Mayuri</option>
+                        <option value="Siddhant">Siddhant</option>
+                        <option value="Amit">Amit</option>
+                    </select>
+
+                    <fieldset class="members-fieldset">
+                        <legend>Group Members</legend>
+
+                        <label class="member-option">
+                            <input type="checkbox" name="members"
+                                   value="Mayuri" checked>
+                            Mayuri
+                        </label>
+
+                        <label class="member-option">
+                            <input type="checkbox" name="members"
+                                   value="Siddhant" checked>
+                            Siddhant
+                        </label>
+
+                        <label class="member-option">
+                            <input type="checkbox" name="members"
+                                   value="Amit" checked>
+                            Amit
+                        </label>
+                    </fieldset>
+
+                    <label for="split-mode">Split method</label>
+                    <select id="split-mode" name="splitMode">
+                        <option value="equal">Split Equally</option>
+                        <option value="custom">Custom Split</option>
+                    </select>
+
+                    <div id="custom-splits" hidden></div>
+
+                    <div id="split-preview" class="split-preview"
+                         aria-live="polite">
+                        Enter the bill amount and select members
+                        to preview each person's share.
+                    </div>
+
+                    <p id="expense-message" role="status"></p>
+
+                    <button class="primary-button" type="submit">
+                        Save Expense
+                    </button>
+
+                </form>
+            </section>
+
+            <section class="panel settlements-panel" id="settlements-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Balances & Settlements</h2>
+                        <p>See who owes whom.</p>
+                    </div>
+                </div>
+
+                <div id="settlement-list">
+                    <p class="empty-state">
+                        Add a group expense to calculate balances.
+                    </p>
+                </div>
+            </section>
+
+            <footer class="footer">
+                Made for friends, powered by smart splitting.
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
-```
